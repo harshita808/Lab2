@@ -28,7 +28,7 @@ contract('Trade',(accounts) => {
 
    it("should return balance of contract",async() => {
     const trade=await Trade.deployed();
-    const b=await this.trade.getBalance().call();
+    const b=await trade.getBalance();
     assert(b);
    });
 
