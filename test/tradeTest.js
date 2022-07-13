@@ -12,14 +12,14 @@ contract('Trade',(accounts) => {
     });
 
    it('Should set the value of price variable',async () => {
-    const trade=await Trade.deployed();
+
     await trade.setPrice(10);
     const p=await trade.price();
     assert(p.toNumber()===10);
    }); 
 
    it("should withdraw ether from contract",async() =>{
-    const trade=await Trade.deployed();
+ 
     const p=await trade.price();
     await trade.withdraw();
     const balance= await web3.eth.getBalance(accounts[0]);
@@ -27,10 +27,35 @@ contract('Trade',(accounts) => {
    });
 
    it("should return balance of contract",async() => {
-    const trade=await Trade.deployed();
     const b=await trade.getBalance();
     assert(b);
    });
 
+   it('checks if only owner can set price', async () => {
+    try {
+        await trade.setPrice(10,{from:accounts[0]});
+        
+    } catch (error) {
+        assert(error,"Only owner should set price");
+    }
+ });
+
+ it('checks if only owner can get balance', async () => {
+    try {
+        await trade.getBalance({from:accounts[0]});
+        
+    } catch (error) {
+        assert(error,"Only owner should get balance");
+    }
+ });
    
+ it('checks if only owner can withdraw', async () => {
+    try {
+        await trade.withdraw({from:accounts[0]});
+        
+    } catch (error) {
+        assert(error,"Only owner should withdraw");
+    }
+ });
+
 });

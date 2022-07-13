@@ -9,19 +9,13 @@ contract Trade{
         owner=payable(msg.sender);
     }
 
-    modifier onlyOwner(){   
+    
+    function setPrice(uint _price) public {
         require(msg.sender==owner,"Only owner can call this function");
-        _;
-    }
-    function setPrice(uint _price) public onlyOwner{
         price=_price;
         
     }
-     function updatingPrice() public {
-          
-           price=price+tx.gasprice;
-            
-    }
+   
    
    
 
@@ -33,12 +27,13 @@ contract Trade{
    
  }
 
-function getBalance() public onlyOwner view returns (uint){
+function getBalance() public view returns (uint){
+    require(msg.sender==owner,"Only owner can call this function");
         return address(this).balance;
     }
    
-   function withdraw() public payable onlyOwner {
-       
+   function withdraw() public payable  {
+        require(msg.sender==owner,"Only owner can call this function");
         owner.transfer(address(this).balance);
     }
 
