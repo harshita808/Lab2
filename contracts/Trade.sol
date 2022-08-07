@@ -11,7 +11,7 @@ contract Trade{
 
     
     function setPrice(uint _price) public {
-        require(msg.sender==owner,"Only owner can call this function");
+       require(msg.sender==owner,"Only owner can call this function");
         price=_price;
         
     }
@@ -28,7 +28,7 @@ contract Trade{
  }
 
 function getBalance() public view returns (uint){
-    require(msg.sender==owner,"Only owner can call this function");
+        //require(msg.sender==owner,"Only owner can call this function");
         return address(this).balance;
     }
    
